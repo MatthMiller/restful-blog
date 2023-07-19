@@ -2,21 +2,22 @@ import jwt from 'jsonwebtoken';
 
 const authMiddleware = (req, res, next) => {
   try {
-    const token = req.headers;
-    console.log(token);
-    // Pegar o token que o client colocou
-    // no Authentication no header
-    // ler com jwt verify
-    // passar o payload decodado
-    // no data da request pra ser usado
-    // no handler que vier no next
-    // (seja post, user, comment, qualquer coisa)
-
-    // Executa a função do controller
-    // (próximo passo do >middle<ware)
+    const token = req.headers.authorization;
+    if (!token) {
+      res
+        .status(401)
+        .json({ message: 'No token found in header Authorization.' });
+      return;
+    }
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    req.userData = decodedToken; // { id: x, email: x } payload
     next();
   } catch (error) {
-    console.log(error);
+    if (error instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ message: 'Token expired. Please log in again' });
+    } else {
+      res.status(401).json({ message: 'Error in Authentication' });
+    }
   }
 };
 
