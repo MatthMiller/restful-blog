@@ -28,11 +28,6 @@ class AuthController {
           }
         );
 
-        // Colocar isso no middleware de autenticação
-        // que vai rodar nas rotas protegidas
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('Decoded Token with .env password:', decodedToken);
-
         res.status(200).json({ token, message: 'User logged with success!' });
       } else {
         res.status(400).json({ message: 'E-mail and password are required' });
