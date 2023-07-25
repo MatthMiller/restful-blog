@@ -11,6 +11,7 @@ import { serve, setup } from 'swagger-ui-express';
 
 const app = express();
 app.use(express.json());
+
 app.use('/api-docs', serve, setup(specs));
 
 app.use('/user', userRoutes);
