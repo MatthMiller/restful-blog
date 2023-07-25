@@ -2,7 +2,44 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 
-class AuthController {
+class UserController {
+  static async checkAuth(req, res) {
+    const email = req.query.email;
+    const token = req.query.token;
+
+    try {
+      if (email && token) {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        if (email === decodedToken.email) {
+          res.status(200).json({ message: 'Valid token' });
+          return;
+        }
+        res.status(401).json({ message: `Token doesn't match email` });
+        return;
+      } else {
+        res.status(400).json({ message: 'E-mail and token are required' });
+        return;
+      }
+    } catch (error) {
+      res.status(401).json({ message: 'Invalid or expired token' });
+      return;
+    }
+  }
+
+  static async getAll(req, res) {
+    try {
+      const users = await User.findAll({
+        raw: true,
+        attributes: { exclude: ['password', 'email'] },
+      });
+
+      res.status(200).json(users);
+      return;
+    } catch (error) {
+      res.status(500).json({ message: 'Error getting all users' });
+    }
+  }
+
   static async login(req, res) {
     try {
       const { email, password } = req.body;
@@ -24,7 +61,7 @@ class AuthController {
           { id: user.id, email: user.email },
           process.env.JWT_SECRET,
           {
-            expiresIn: '4h',
+            expiresIn: '10h',
           }
         );
 
@@ -91,4 +128,4 @@ class AuthController {
   }
 }
 
-export default AuthController;
+export default UserController;

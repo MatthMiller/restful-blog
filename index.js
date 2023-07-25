@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import db from './db/db.js';
-import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import User from './models/User.js';
 import Post from './models/Post.js';
@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use('/api-docs', serve, setup(specs));
 
-app.use('/user', authRoutes);
+app.use('/user', userRoutes);
 app.use('/post', postRoutes);
 app.use('/', (req, res) => {
   res.status(404).json({ message: '404: Page not found' });

@@ -1,47 +1,75 @@
 import Post from '../models/Post.js';
-
-console.log('teste'.substring(0, 500) + '...');
+import User from '../models/User.js';
 
 class PostController {
   // Fazer depois no user uma rota de check-auth? só pra
   // ver se está logado com o token
 
+  // post/all/<recent|old>?page=<x>&postsPerPage=<x>
   static async getAll(req, res) {
     try {
-      const orderParam = req.params.order;
-      let order = '';
+      const orderParam = req.params.order || 'recent';
+      const actualPage = parseInt(req.query.page) || 1;
+      const postsPerPage = parseInt(req.query.postsPerPage) || 10;
 
+      let order = '';
       if (orderParam === 'recent') {
         order = 'DESC';
       } else if (orderParam === 'old') {
         order = 'ASC';
-      } else if (orderParam === undefined) {
-        order = 'DESC';
       } else {
         res.status(400).json({ message: 'Invalid order filter' });
         return;
       }
 
-      const filteredPosts = await Post.findAll({
+      const { count, rows } = await Post.findAndCountAll({
         raw: true,
+        limit: postsPerPage,
+        offset: (actualPage - 1) * postsPerPage,
         order: [['createdAt', order]],
-      });
-      filteredPosts.forEach(({ content }) => {
-        content =
-          content.substring(0, 500) + (content.length >= 500 ? '...' : '');
+        include: [
+          {
+            model: User,
+            attributes: ['name'],
+          },
+        ],
+        attributes: { exclude: ['UserId'] },
       });
 
-      res.status(200).json(filteredPosts);
+      const posts = rows.map((post) => ({
+        id: post.id,
+        title: post.title,
+        author: post['User.name'],
+        content:
+          post.content.substring(0, 500) +
+          (post.content.length >= 500 ? '...' : ''),
+        createdAt: post.createdAt,
+        updatedAt: post.updatedAt,
+      }));
+
+      res.status(200).json({
+        posts,
+        actualPage,
+        totalPages: Math.ceil(count / postsPerPage),
+      });
     } catch (error) {
       res.status(500).json({ message: 'Error getting all posts' });
       return;
     }
   }
 
-  // post/:id
+  // post/<id>
   static async getOne(req, res) {
     try {
       const id = req.params.id;
+      const post = await Post.findByPk(id);
+
+      if (!post) {
+        res.status(404).json({ message: 'Post not found' });
+        return;
+      }
+
+      res.status(200).json(post);
     } catch (error) {
       res.status(500).json({ message: 'Error getting specific post' });
       return;
@@ -50,10 +78,10 @@ class PostController {
     // seria o post.getComments();
   }
 
-  // post/:id/comments
-  static async getOneComments(req, res) {}
+  // post/<id>/comments
+  static async comments(req, res) {}
 
-  // (get)post/search/ :term ?
+  // post/search?term=<x> ?
   static async search(req, res) {}
 
   static async create(req, res) {

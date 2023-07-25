@@ -4,8 +4,10 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 
 const postRoutes = Router();
 
-postRoutes.post('/create', authMiddleware, PostController.create);
 postRoutes.get('/all/:order?', PostController.getAll);
+postRoutes.get('/:id', PostController.getOne);
+postRoutes.get('/search/:term', PostController.search);
+postRoutes.post('/create', authMiddleware, PostController.create);
 // view/get
 // edit/put (auth)
 // delete/delete (auth)
