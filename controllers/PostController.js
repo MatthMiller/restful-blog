@@ -87,7 +87,13 @@ class PostController {
   static async create(req, res) {
     try {
       const { id } = req.userData; // from middleware
+      const reqId = req.params.id;
       const { title, content } = req.body;
+
+      if (!(id === parseInt(reqId))) {
+        res.status(401).json({ message: `Invalid id` });
+        return;
+      }
 
       if (!title && !content) {
         res.status(400).json({ message: 'Title and content are required' });

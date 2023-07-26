@@ -46,6 +46,13 @@
  *    summary: Create a new post (needs auth)
  *    tags: [Posts]
  *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: integer
+ *          example: 1 (example)
+ *        description: The user ID.
  *      - in: body
  *        schema:
  *          type: object
@@ -60,7 +67,7 @@
  *              type: string
  *              example: Content of the post, unlimited characters.
  *
- * /post/update/{id}:
+ * /post/update/{userId}:
  *  put:
  *    summary: Update a post (needs auth)
  *    tags: [Posts]
@@ -71,7 +78,7 @@
  *        schema:
  *          type: integer
  *          example: 1 (example)
- *        description: The ID of the post to retrieve.
+ *        description: The user ID.
  *      - in: body
  *        schema:
  *          type: object
@@ -86,7 +93,7 @@
  *              type: string
  *              example: Content of the post, unlimited characters.
  *
- * /post/delete/{id}:
+ * /post/delete/{userId}:
  *  delete:
  *    summary: Delete a post (needs auth)
  *    tags: [Posts]
@@ -98,5 +105,5 @@
  *          type: integer
  *          example: 1 (example)
  *
- *        description: The id of the post
+ *        description: The user ID.
  */
