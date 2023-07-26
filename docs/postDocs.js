@@ -41,7 +41,7 @@
  *          example: 1 (example)
  *        description: The ID of the post to retrieve.
  *
- * /post/create:
+ * /post/create/{id}:
  *  post:
  *    summary: Create a new post (needs auth)
  *    tags: [Posts]
