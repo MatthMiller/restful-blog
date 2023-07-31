@@ -60,7 +60,7 @@
  *              type: string
  *              example: Content of the post, unlimited characters.
  *
- * /post/update:
+ * /post/{postId}/update:
  *  put:
  *    summary: Update a post (needs auth)
  *    tags: [Posts]
@@ -78,18 +78,24 @@
  *            content:
  *              type: string
  *              example: Content of the post, unlimited characters.
+ *      - in: path
+ *        name: postId
+ *        required: true
+ *        schema:
+ *          type: integer
+ *          example: 1 (example)
+ *        description: The post ID.
  *
- * /post/delete:
+ * /post/{postId}/delete:
  *  delete:
  *    summary: Delete a post (needs auth)
  *    tags: [Posts]
  *    parameters:
  *      - in: path
- *        name: id
+ *        name: postId
  *        required: true
  *        schema:
  *          type: integer
  *          example: 1 (example)
- *
- *        description: The user ID.
+ *        description: The post ID.
  */

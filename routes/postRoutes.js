@@ -9,7 +9,6 @@ postRoutes.get('/:id', PostController.getOne);
 postRoutes.get('/:id/comments', PostController.comments);
 postRoutes.post('/create', authMiddleware, PostController.create);
 postRoutes.put('/:id/update', authMiddleware, PostController.update);
-// edit/put (auth)
-// delete/delete (auth)
+postRoutes.delete('/:id/delete', authMiddleware, PostController.delete);
 
 export default postRoutes;

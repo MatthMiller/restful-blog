@@ -82,11 +82,17 @@ class PostController {
 
     const post = await Post.findByPk(id);
 
+    if (!post) {
+      res.status(404).json({ message: 'Post not found' });
+      return;
+    }
+
     const comments = await post.getComments();
 
     res.status(200).json(comments);
   }
 
+  // post/create
   static async create(req, res) {
     try {
       const { id } = req.userData; // from middleware
@@ -115,6 +121,7 @@ class PostController {
     }
   }
 
+  // post/<id>/update
   static async update(req, res) {
     try {
       const { id } = req.userData;
@@ -130,7 +137,7 @@ class PostController {
       if (!(post.get().UserId == id)) {
         res
           .status(401)
-          .json({ message: "This post don't belong to actual user" });
+          .json({ message: "This post doesn't belong to actual user" });
         return;
       }
 
@@ -151,6 +158,35 @@ class PostController {
       return;
     } catch (error) {
       res.status(500).json({ message: 'Error editing post' });
+      console.log(error);
+      return;
+    }
+  }
+
+  static async delete(req, res) {
+    try {
+      const postId = req.params.id;
+      const userId = req.userData.id;
+
+      const post = await Post.findByPk(postId);
+
+      if (!post) {
+        res.status(404).json({ message: 'Post not found' });
+        return;
+      }
+
+      if (!(post.get().UserId == userId)) {
+        res
+          .status(401)
+          .json({ message: "This post doesn't belong to actual user" });
+        return;
+      }
+
+      post.destroy();
+
+      res.status(200).json({ message: 'Post deleted with success' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting post' });
       console.log(error);
       return;
     }
