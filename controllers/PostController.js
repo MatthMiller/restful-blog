@@ -2,9 +2,6 @@ import Post from '../models/Post.js';
 import User from '../models/User.js';
 
 class PostController {
-  // Fazer depois no user uma rota de check-auth? só pra
-  // ver se está logado com o token
-
   // post/all/<recent|old>?page=<x>&postsPerPage=<x>
   static async getAll(req, res) {
     try {
@@ -72,6 +69,7 @@ class PostController {
       res.status(200).json(post);
     } catch (error) {
       res.status(500).json({ message: 'Error getting specific post' });
+      console.log(error);
       return;
     }
     // Puxar comentários também
@@ -79,21 +77,20 @@ class PostController {
   }
 
   // post/<id>/comments
-  static async comments(req, res) {}
+  static async comments(req, res) {
+    const id = req.params.id;
 
-  // post/search?term=<x> ?
-  static async search(req, res) {}
+    const post = await Post.findByPk(id);
+
+    const comments = await post.getComments();
+
+    res.status(200).json(comments);
+  }
 
   static async create(req, res) {
     try {
       const { id } = req.userData; // from middleware
-      const reqId = req.params.id;
       const { title, content } = req.body;
-
-      if (!(id === parseInt(reqId))) {
-        res.status(401).json({ message: `Invalid id` });
-        return;
-      }
 
       if (!title && !content) {
         res.status(400).json({ message: 'Title and content are required' });
@@ -114,6 +111,48 @@ class PostController {
       return;
     } catch (error) {
       res.status(500).json({ message: 'Error creating post' });
+      console.log(error);
+    }
+  }
+
+  static async update(req, res) {
+    try {
+      const { id } = req.userData;
+      const { title, content } = req.body;
+      const postId = req.params.id;
+
+      const post = await Post.findByPk(postId);
+      if (!post) {
+        res.status(404).json({ message: 'Post not found' });
+        return;
+      }
+
+      if (!(post.get().UserId == id)) {
+        res
+          .status(401)
+          .json({ message: "This post don't belong to actual user" });
+        return;
+      }
+
+      if (!title && !content) {
+        res.status(400).json({ message: 'Title and content are required' });
+        return;
+      }
+
+      if (title.length >= 120) {
+        res
+          .status(400)
+          .json({ message: 'Title must have less than 120 characters' });
+        return;
+      }
+
+      await post.update({ title, content });
+      res.status(200).json({ message: `Post updated with success!` });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: 'Error editing post' });
+      console.log(error);
+      return;
     }
   }
 }

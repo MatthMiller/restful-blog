@@ -28,7 +28,7 @@
  *          example: 10 (example)
  *        description: The number of posts to return per page (defaults to 10 if not specified).
  *
- * /post/{id}:
+ * /post/{postId}:
  *  get:
  *    summary: Get a single post by ID
  *    tags: [Posts]
@@ -41,18 +41,11 @@
  *          example: 1 (example)
  *        description: The ID of the post to retrieve.
  *
- * /post/create/{id}:
+ * /post/create:
  *  post:
  *    summary: Create a new post (needs auth)
  *    tags: [Posts]
  *    parameters:
- *      - in: path
- *        name: id
- *        required: true
- *        schema:
- *          type: integer
- *          example: 1 (example)
- *        description: The user ID.
  *      - in: body
  *        schema:
  *          type: object
@@ -67,18 +60,11 @@
  *              type: string
  *              example: Content of the post, unlimited characters.
  *
- * /post/update/{userId}:
+ * /post/update:
  *  put:
  *    summary: Update a post (needs auth)
  *    tags: [Posts]
  *    parameters:
- *      - in: path
- *        name: id
- *        required: true
- *        schema:
- *          type: integer
- *          example: 1 (example)
- *        description: The user ID.
  *      - in: body
  *        schema:
  *          type: object
@@ -93,7 +79,7 @@
  *              type: string
  *              example: Content of the post, unlimited characters.
  *
- * /post/delete/{userId}:
+ * /post/delete:
  *  delete:
  *    summary: Delete a post (needs auth)
  *    tags: [Posts]

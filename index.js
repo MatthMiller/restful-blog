@@ -3,6 +3,7 @@ import express from 'express';
 import db from './db/db.js';
 import userRoutes from './routes/userRoutes.js';
 import postRoutes from './routes/postRoutes.js';
+import commentRoutes from './routes/commentRoutes.js';
 import User from './models/User.js';
 import Post from './models/Post.js';
 import Comment from './models/Comment.js';
@@ -16,8 +17,9 @@ app.use('/api-docs', serve, setup(specs));
 
 app.use('/user', userRoutes);
 app.use('/post', postRoutes);
+app.use('/comment', commentRoutes);
 app.use('/', (req, res) => {
-  res.status(404).json({ message: '404: Page not found' });
+  res.status(404).json({ message: 'Status 404: Route not found' });
 });
 
 db.sync()

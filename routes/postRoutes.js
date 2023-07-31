@@ -6,9 +6,9 @@ const postRoutes = Router();
 
 postRoutes.get('/all/:order?', PostController.getAll);
 postRoutes.get('/:id', PostController.getOne);
-postRoutes.get('/search/:term', PostController.search);
-postRoutes.post('/create/:id', authMiddleware, PostController.create);
-// view/get
+postRoutes.get('/:id/comments', PostController.comments);
+postRoutes.post('/create', authMiddleware, PostController.create);
+postRoutes.put('/:id/update', authMiddleware, PostController.update);
 // edit/put (auth)
 // delete/delete (auth)
 
