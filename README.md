@@ -2,7 +2,7 @@
 
 API para construção de blog. Inclui cadastro e login de usuários com autenticação; visualização, criação, edição e deleção de posts e comentários.
 
-### Conhecimentos aplicados
+## Conhecimentos aplicados
 
 - Framework Express.js;
 - Sequelize (ORM, Object Relational Mapping);
@@ -15,26 +15,26 @@ API para construção de blog. Inclui cadastro e login de usuários com autentic
 - Hashing de senhas com bcrypt;
 - Documentação com Swagger.
 
-### Dependências
+## Dependências
 
 - Node.js;
 - MySQL;
 - Banco de dados com o nome 'restful_blog'.
 
-## Instalando módulos
+### Instalando módulos
 
 ```
 npm install
 ```
 
-## Executando o servidor
+### Executando o servidor
 
 ```
 npm start
 ```
 
-### Documentação via Swagger
+## Documentação via Swagger
 
-As rotas da aplicação estão documentadas em /api-docs (localhost:3000/api-docs).
+As rotas da aplicação estão documentadas em `/api-docs`. Ex: localhost:3000/api-docs.
 
 <img src='https://github.com/MatthMiller/restful-blog/blob/main/readme/img/swagger.png'/>
