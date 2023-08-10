@@ -35,6 +35,8 @@ npm start
 
 ## Documentação via Swagger
 
-As rotas da aplicação estão documentadas em `/api-docs`. Ex: localhost:3000/api-docs. Algumas rotas documentadas:
+As rotas da aplicação estão documentadas em `/api-docs`. Ex: localhost:3000/api-docs.
+
+Algumas rotas documentadas:
 
 <img src='https://github.com/MatthMiller/restful-blog/blob/main/readme/img/swagger.png'/>
