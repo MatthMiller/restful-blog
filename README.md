@@ -5,6 +5,7 @@ API para construção de blog. Inclui cadastro e login de usuários com autentic
 ### Conhecimentos aplicados
 
 - Framework Express.js;
+- Sequelize (ORM - Object Relational Mapping);
 - Testes com Insomnia;
 - Métodos HTTP e Status Codes;
 - Query params, route params e request body;
