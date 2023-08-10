@@ -5,7 +5,7 @@ API para construção de blog. Inclui cadastro e login de usuários com autentic
 ### Conhecimentos aplicados
 
 - Framework Express.js;
-- Sequelize (ORM - Object Relational Mapping);
+- Sequelize (ORM, Object Relational Mapping);
 - Testes com Insomnia;
 - Métodos HTTP e Status Codes;
 - Query params, route params e request body;
@@ -17,9 +17,9 @@ API para construção de blog. Inclui cadastro e login de usuários com autentic
 
 ### Dependências
 
-- Node.js
-- MySQL
-- Banco de dados com o nome 'restful_blog'
+- Node.js;
+- MySQL;
+- Banco de dados com o nome 'restful_blog'.
 
 ## Instalando módulos
 
@@ -37,4 +37,4 @@ npm start
 
 As rotas da aplicação estão documentadas em /api-docs (localhost:3000/api-docs).
 
-<img src=''/>
+<img src='https://github.com/MatthMiller/restful-blog/blob/main/readme/img/swagger.png'/>
