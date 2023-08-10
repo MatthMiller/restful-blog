@@ -8,6 +8,7 @@ API para construção de blog. Inclui cadastro e login de usuários com autentic
 - Sequelize (ORM, Object Relational Mapping);
 - Testes com Insomnia;
 - Métodos HTTP e Status Codes;
+- Middlewares;
 - Query params, route params e request body;
 - Paginação (rota de posts);
 - Integração com banco de dados MySQL;
